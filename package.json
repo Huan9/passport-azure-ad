@@ -1,6 +1,6 @@
 {
   "name": "passport-azure-ad",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "license": "MIT",
   "keywords": [
     "saml",
@@ -14,7 +14,7 @@
     "bearer",
     "shibboleth"
   ],
-  "description": "WSFED/SAMLP/OIDC/Bearer Passport strategies for Azure Active Directory",
+  "description": "OIDC and Bearer Passport strategies for Azure Active Directory",
   "author": {
     "name": "azuread",
     "email": "nugetaad@microsoft.com",

@@ -1,18 +1,37 @@
-<a name="3.0.0"></a>
+<a name="3.0.1"></a>
+# 3.0.1
+
+## OIDCStrategy
+
+### New features
+
+* specify tenant per request 
+
+  Now you can specify the tenant per request, using the `tenantIdOrName` option in `passport.authenticate`. More details on the usage can be found in README.md. This brings us two additional benefits:
+
+  * B2C common endpoint support
+
+    Now you can use B2C common endpoint, if you specify the tenant for each login request (in other words, a request that doesn't contain code or id_token) using the `tenantIdOrName` option.
+
+  * extensive issuer validation on common endpoint
+    
+    If you want to validate issuer on common endpoint, previously you have to provide `issuer`in configuration. Now you can either provide `issuer`, or specify the tenant for each login request.
+
 # 3.0.0
 
 ## OIDCStrategy
 
 ### Breaking changes
 
+#### SAML and WSFED
+
+* We no longer support SAML and WSFED starting from version 3.0.0, please use release 2.0.3 instead.
+
 #### Options
 
 * `skipUserProfile` option: this option is no longer provided. We will load 'userinfo' if we can get an access_token for 'userinfo'. More specifically, if you are using AAD v1 with 'code', 'code id_token' or 'id_token code' flow, and the resource is not specified. For all other scenarios, we do an 'id_token' fallback.
 
-* `returnURL` option: this option is renamed to `redirectUrl`. `redirectUrl` can only be a https url now unless you set the
-`allowHttpForRedirectUrl` option to true.
-
-* `isB2C` option: this is a new option. If you are using a B2C tenant, set this option to true. 
+* `returnURL`/`callbackURL` option: this option is renamed to `redirectUrl`. `redirectUrl` can only be a https url now unless you set the `allowHttpForRedirectUrl` option to true.
 
 #### Claims in the returned profile
 
@@ -20,6 +39,16 @@
 
 * added `oid`, `upn` and `emails` claim. `emails` claim is always an array. You might get `upn` claim from non B2C tenants, and you might
 get `emails` claim from B2C tenants.
+
+#### B2C only
+
+* `identityMetadata` option: common endpoint is no longer allowed for B2C. Tenant-specific endpoint should be used, for instance:
+`https://login.microsoftonline.com/your_B2C_tenant_name.onmicrosoft.com/v2.0/.well-known/openid-configuration` or 
+`https://login.microsoftonline.com/your_B2C_tenant_guid/v2.0/.well-known/openid-configuration`.
+
+* `isB2C` option: this is a new option. If you are using a B2C tenant, set this option to true. 
+
+* `tenantName`: this option is no longer used.
 
 ### New features
 
