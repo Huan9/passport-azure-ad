@@ -1,4 +1,18 @@
 <a name="3.0.1"></a>
+# 3.0.3
+
+## Bug fixes
+
+* [#248](https://github.com/AzureAD/passport-azure-ad/issues/248) End_to_end_test showing up in test folder
+
+# 3.0.2
+
+## Changes
+
+* removed dependency on oniyi-object-transform
+
+* allow 5 minutes clock skew for token validation
+
 # 3.0.1
 
 ## OIDCStrategy
@@ -7,15 +21,25 @@
 
 * specify tenant per request 
 
-  Now you can specify the tenant per request, using the `tenantIdOrName` option in `passport.authenticate`. More details on the usage can be found in README.md. This brings us two additional benefits:
+  Now you can specify the tenant per request, using the `tenantIdOrName` option in `passport.authenticate`. More details on the usage can be found in README.md. `tenantIdOrName` enables two features:
 
   * B2C common endpoint support
 
-    Now you can use B2C common endpoint, if you specify the tenant for each login request (in other words, a request that doesn't contain code or id_token) using the `tenantIdOrName` option.
+    Now you can use the B2C common endpoint by specifying the tenant for each login request using the `tenantIdOrName` option. A login request is any request that doesn't contain code or id_token.
 
   * extensive issuer validation on common endpoint
     
-    If you want to validate issuer on common endpoint, previously you have to provide `issuer`in configuration. Now you can either provide `issuer`, or specify the tenant for each login request.
+    Previously, you had to provide an `issuer` value in configuration to validat the issuer on the common endpoint. Alternatively, you can now specify the tenant for each login request.
+
+## Bug fixes
+
+* [#239](https://github.com/AzureAD/passport-azure-ad/issues/239) Problems with signin in the updated sample
+
+* [#233](https://github.com/AzureAD/passport-azure-ad/issues/233) Provide documentation with more details
+
+* [#229](https://github.com/AzureAD/passport-azure-ad/issues/229) use tenant id dynamically for each request
+
+* [#123](https://github.com/AzureAD/passport-azure-ad/issues/123) Question: what is the difference between OIDCStrategy and BearerStrategy. Which one should I use?
 
 # 3.0.0
 
