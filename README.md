@@ -16,7 +16,7 @@ and with [Microsoft Active Directory Federation Services](http://en.wikipedia.or
 _passport-azure-ad_ has a known security vulnerability affecting versions <1.4.6 and 2.0.0. Please update to >=1.4.6 or >=2.0.1 immediately. For more details, see the [security notice](https://github.com/AzureAD/passport-azure-ad/blob/master/SECURITY-NOTICE.MD).
 
 ## 2. Versions
-Current version - 3.0.1  
+Current version - 3.0.3  
 Minimum  recommended version - 1.4.6  
 You can find the changes for each version in the [change log](https://github.com/AzureAD/passport-azure-ad/blob/master/CHANGELOG.md).
 
@@ -32,13 +32,14 @@ You can find the changes for each version in the [change log](https://github.com
 
 ## 5. Usage
 
-This library contains two strategies, OIDCStrategy and BearerStrategy.
+This library contains two strategies: OIDCStrategy and BearerStrategy.
 
-OIDCStrategy is for web application login purpose using OpenID connect protocol. It works in the following way:
- If a user is not logged in, passport sends an authentication request to AAD (Azure Active Directory), then AAD returns a login page to let the user enter their credentials. Once the credentials is authenticated by AAD, the web application will eventually get an id_token back (directly from AAD authentication endpoint, or by redeeming a code at AAD token endpoint, depending on the flow you choose). Passport then validates the id_token and propagates the claims in id_token back to the verify callback, and let the passport framework finish the remaining authentication procedures. If the whole process is successful, passport adds the user information into `req.user` and passes it to the next middleware; otherwise, passport sends back an authorized response or redirects the user to the page you specify (such as homepage or login page).
+OIDCStrategy uses OpenID Connect protocol for web application login purposes. It works in the following manner:
+If a user is not logged in, passport sends an authentication request to AAD (Azure Active Directory), and AAD prompts the user for his or her sign-in credentials. On successful authentication, depending on the flow you choose, web application will eventually get an id_token back either directly from the AAD authorization endpoint or by redeeming a code at the AAD token endpoint. Passport then validates the id_token and propagates the claims in id_token back to the verify callback, and let the framework finish the remaining authentication procedure. If the whole process is successful, passport adds the user information to `req.user` and passes it to the next middleware. In case of error, passport either sends back an unauthorized response or redirects the user to the page you specified (such as homepage or login page).
 
-BearerStrategy is for protecting web resource/api purpose using Bearer Token protocol. It works in the following way:
- User sends a request to the protected web api, and the request is supposed to contain an access_token in either authorization header or body. Passport extracts and validates the access_token, and propagates the claims in access_token to the verify callback and let the passport framework finish the remaining authentication procedure. If the whole process is successful, passport adds the user information into `req.user` and passes it to the next middleware, which is usually the business logic of the web resource/api; otherwise, passport sends back an authorized response.
+BearerStrategy uses Bearer Token protocol to protect web resource/api. It works in the following manner:
+User sends a request to the protected web api which contains an access_token in either the authorization header or body. Passport extracts and validates the access_token, and propagates the claims in access_token to the verify callback and let the framework finish the remaining authentication procedure. On successful authentication, passport adds the user information to `req.user` and passes it to the next middleware, which is usually the business logic of the web resource/api. In case of error, passport sends back an unauthorized response.
+
 
 We support AAD v1, v2 and B2C tenants for both strategies. Please check out section 7 for the samples. You can manage v1 tenants and register applications at https://manage.windowsazure.com. For v2 tenants and applications, you should go to https://apps.dev.microsoft.com. For B2C tenants, go to https://manage.windowsazure.com and click 'Manage B2C settings' to register applications and policies. 
 
@@ -225,7 +226,7 @@ app.get('/logout', function(req, res){
 
 * `failureRedirect`: the url redirected to when the authentication fails
 
-* `session`: if you don't want a persistent login session, you can use `session: false`
+* `session`: if you don't want a persistent login session, you can use `session: false`. The default value is true.
 
 * `customState`: if you want to use a custom state value instead of a random generated one
 
@@ -376,7 +377,7 @@ In the following example, we are using passport to protect '/api/tasks'. User se
 
 #### 5.2.3 Options available for `passport.authenticate`
 
-* `session`: if you don't want a persistent login session, you can use `session: false`
+* `session`: if you don't want a persistent login session, you can use `session: false`. The default value is true.
 
 Example:
 
